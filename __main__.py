@@ -1,6 +1,7 @@
 from src.file_loader import FileLoader
 from src.slide import Slide
 from src.algorithms import SlidesGeneticAlgorithm
+from src.slide import compare
 
 photos = FileLoader('./resources/b_lovely_landscapes.txt').parse()
 
