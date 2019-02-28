@@ -60,7 +60,6 @@ class ISlidesGeneticAlgorithm(object):
             True if the termination condition is accomplished, False
             otherwise.
         """
-        if i > 0: print(i, fitnesses[-1])
         if i >= self.max_epochs:
             print(
                 f"Terminated due to maximum number of epochs reached ={self.max_epochs}")
@@ -71,15 +70,6 @@ class ISlidesGeneticAlgorithm(object):
                 "More than 15 epochs have passed with no chane in individual average fitness")
             return True
         return False
-
-    def calculate_scores(self, coordinates):
-        score_matrix = np.zeros((len(coordinates), len(coordinates)))
-        for i in range(len(coordinates)):
-            for j in range(len(coordinates)):
-                score_matrix[i][j] = np.linalg.norm(
-                    coordinates[i] - coordinates[j]
-                )
-        return score_matrix
 
     def do_initialize_population(self, n_cities):
         raise NotImplementedError()
@@ -163,10 +153,17 @@ class SlidesGeneticAlgorithm(ISlidesGeneticAlgorithm):
         new_slide_sequence = [-1 for _ in range(len(slide_sequence_2))]
         new_slide_sequence[ini:end] = slide_sequence_1[ini:end]
 
-        for slide in [slide for slide in slide_sequence_2 if slide not in new_slide_sequence]:
-            for i in range(len(new_slide_sequence)):
+        new_sequence_set = set(new_slide_sequence)
+        slide_sequence_2_removed_1 = [
+            slide for slide in slide_sequence_2 if slide not in new_sequence_set
+        ]
+
+        last_i = 0
+        for slide in slide_sequence_2_removed_1:
+            for i in range(last_i, len(new_slide_sequence)):
                 if new_slide_sequence[i] == -1:
                     new_slide_sequence[i] = slide
+                    last_i = i
                     break
 
         return Slideshow(new_slide_sequence)
@@ -206,4 +203,5 @@ class SlidesGeneticAlgorithm(ISlidesGeneticAlgorithm):
             [*olders, *newers], key=lambda x: x.fitness,
             reverse=True
         )
+        print(newpop[0].score)
         return newpop[:self.population_size]
