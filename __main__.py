@@ -1,9 +1,14 @@
 from src.file_loader import FileLoader
+from src.file_writer.writer import FileWriter
+
 from src.slide import Slide
 from src.algorithms import SlidesGeneticAlgorithm
 from src.slide import compare
 
-photos = FileLoader('./resources/c_memorable_moments.txt').parse()
+filename = 'a_example.txt'
+
+
+photos = FileLoader('./resources/' + filename).parse()
 
 slideshow = SlidesGeneticAlgorithm(
     population_size=100,
@@ -11,6 +16,4 @@ slideshow = SlidesGeneticAlgorithm(
     max_epochs=10000
 ).call(photos)
 
-print(
-    slideshow, slideshow.score
-)
+FileWriter().write('./out/' + filename, slideshow)

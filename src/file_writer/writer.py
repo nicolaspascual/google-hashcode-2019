@@ -1,10 +1,6 @@
 from src.algorithms import Slideshow
 
 class FileWriter(object):
-    def __init__(self, path):
-        with open(path, 'r') as f:
-            self.raw_statement = f.readlines()
-
     def write(self, filename, slideshow):
         return self._write(filename, slideshow)
 
