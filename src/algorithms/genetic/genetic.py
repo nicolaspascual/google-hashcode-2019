@@ -60,8 +60,6 @@ class ISlidesGeneticAlgorithm(object):
             True if the termination condition is accomplished, False
             otherwise.
         """
-        if i > 0:
-            print(i, fitnesses[-1])
         if i >= self.max_epochs:
             print(
                 f"Terminated due to maximum number of epochs reached ={self.max_epochs}")
@@ -205,4 +203,5 @@ class SlidesGeneticAlgorithm(ISlidesGeneticAlgorithm):
             [*olders, *newers], key=lambda x: x.fitness,
             reverse=True
         )
+        print(newpop[0].score)
         return newpop[:self.population_size]
