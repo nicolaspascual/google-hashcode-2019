@@ -10,6 +10,8 @@ numpy = "*"
 [dev-packages]
 pylint = "*"
 "autopep8" = "*"
+ipdb = "*"
+rope = "*"
 
 [requires]
 python_version = "3.7"

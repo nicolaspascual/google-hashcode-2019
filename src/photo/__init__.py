@@ -1,0 +1,1 @@
+from src.photo.photo import Photo
